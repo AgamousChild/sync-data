@@ -20,7 +20,7 @@ Each tool has its own `CLAUDE.md` with full spec, architecture, and implementati
 sync-data/
   tools/
     gw-sync/             ← scrape GW PDFs → markdown (42 tests)
-    wahapedia-sync/      ← Wahapedia CSVs → SQLite + markdown (49 tests)
+    wahapedia-sync/      ← Wahapedia CSVs → SQLite + markdown (50 tests)
     bsdata-sync/         ← BSData XML → SQLite + markdown (58 tests)
   .local/                ← output directory (gitignored, created at runtime)
     gw/
@@ -30,7 +30,7 @@ sync-data/
     wahapedia/
       csv/               ← raw downloaded CSVs + Excel spec
       markdown/          ← per-faction markdown + INDEX.md
-      data.db            ← SQLite database (12 tables, indexed by faction)
+      data.db            ← SQLite database (19 tables, indexed by faction)
       metadata.json      ← last_update timestamp, per-file row counts
     bsdata/
       data.db            ← SQLite database (4 tables, indexed by faction)
@@ -45,7 +45,7 @@ sync-data/
 | Tool | Tests | Purpose |
 |---|---|---|
 | gw-sync | 42 | Scrape GW downloads page for 40K PDFs, extract text, convert to markdown |
-| wahapedia-sync | 49 | Pull Wahapedia CSVs into local SQLite + per-faction markdown |
+| wahapedia-sync | 50 | Pull Wahapedia CSVs into local SQLite + per-faction markdown |
 | bsdata-sync | 58 | Pull BSData XML catalogs from GitHub into local SQLite + per-faction markdown |
 
 ---
@@ -119,7 +119,7 @@ Tests live next to the code they test (`foo.ts` / `foo.test.ts`).
 
 The specific test file structure for each tool is documented in that tool's own CLAUDE.md.
 
-**Repo total: 149 tests, all passing.**
+**Repo total: 150 tests, all passing.**
 
 ```bash
 # Run tests for a specific tool
@@ -135,5 +135,5 @@ cd tools/bsdata-sync && pnpm test
 All three tools are built and tested:
 
 - **gw-sync** — 42 tests passing, full pipeline: scrape → download → parse → markdown
-- **wahapedia-sync** — 49 tests passing, full pipeline: fetch CSVs → SQLite → markdown
+- **wahapedia-sync** — 50 tests passing, full pipeline: fetch CSVs → SQLite → markdown
 - **bsdata-sync** — 58 tests passing, full pipeline: GitHub API → XML parse → SQLite → markdown

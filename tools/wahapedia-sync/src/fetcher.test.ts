@@ -88,8 +88,10 @@ describe('downloadAllCsvs', () => {
     const csvFiles = [
       'Last_update', 'Factions', 'Datasheets', 'Datasheets_models',
       'Datasheets_abilities', 'Datasheets_unit_composition', 'Datasheets_wargear',
-      'Abilities', 'Stratagems', 'Detachment_abilities', 'Enhancements',
-      'Wargear_list', 'Source',
+      'Datasheets_keywords', 'Datasheets_options', 'Datasheets_models_cost',
+      'Datasheets_stratagems', 'Datasheets_enhancements', 'Datasheets_detachment_abilities',
+      'Datasheets_leader', 'Abilities', 'Stratagems', 'Detachment_abilities',
+      'Detachments', 'Enhancements', 'Source',
     ]
     for (const name of csvFiles) {
       responses[`https://wahapedia.ru/wh40k10ed/${name}.csv`] = `id|name\n1|${name}`
@@ -98,7 +100,7 @@ describe('downloadAllCsvs', () => {
     const fetch = mockFetch(responses)
     const results = await downloadAllCsvs(tempDir, fetch)
 
-    expect(results).toHaveLength(13)
+    expect(results).toHaveLength(20)
     expect(existsSync(join(tempDir, 'Factions.csv'))).toBe(true)
     expect(readFileSync(join(tempDir, 'Factions.csv'), 'utf-8')).toBe('id|name\n1|Factions')
 
@@ -112,8 +114,10 @@ describe('downloadAllCsvs', () => {
     const csvFiles = [
       'Last_update', 'Factions', 'Datasheets', 'Datasheets_models',
       'Datasheets_abilities', 'Datasheets_unit_composition', 'Datasheets_wargear',
-      'Abilities', 'Stratagems', 'Detachment_abilities', 'Enhancements',
-      'Wargear_list', 'Source',
+      'Datasheets_keywords', 'Datasheets_options', 'Datasheets_models_cost',
+      'Datasheets_stratagems', 'Datasheets_enhancements', 'Datasheets_detachment_abilities',
+      'Datasheets_leader', 'Abilities', 'Stratagems', 'Detachment_abilities',
+      'Detachments', 'Enhancements', 'Source',
     ]
     for (const name of csvFiles) {
       responses[`https://wahapedia.ru/wh40k10ed/${name}.csv`] = `col\nval`

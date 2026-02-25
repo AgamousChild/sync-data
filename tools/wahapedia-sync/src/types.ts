@@ -7,11 +7,18 @@ export const CSV_FILES = [
   'Datasheets_abilities',
   'Datasheets_unit_composition',
   'Datasheets_wargear',
+  'Datasheets_keywords',
+  'Datasheets_options',
+  'Datasheets_models_cost',
+  'Datasheets_stratagems',
+  'Datasheets_enhancements',
+  'Datasheets_detachment_abilities',
+  'Datasheets_leader',
   'Abilities',
   'Stratagems',
   'Detachment_abilities',
+  'Detachments',
   'Enhancements',
-  'Wargear_list',
   'Source',
 ] as const
 
@@ -32,11 +39,15 @@ export interface Datasheet {
   faction_id: string
   source_id: string
   role: string
-  unit_composition: string
+  legend: string
   transport: string
   virtual: string
-  cost: string
-  cost_per_unit: string
+  loadout: string
+  leader_head: string
+  leader_footer: string
+  damaged_w: string
+  damaged_description: string
+  link: string
 }
 
 export interface DatasheetModel {
@@ -45,21 +56,25 @@ export interface DatasheetModel {
   name: string
   M: string
   T: string
-  SV: string
+  Sv: string
   W: string
-  LD: string
+  Ld: string
   OC: string
   base_size: string
-  invul_save: string
+  inv_sv: string
+  inv_sv_descr: string
+  base_size_descr: string
 }
 
 export interface DatasheetAbility {
   datasheet_id: string
   line: string
   ability_id: string
-  is_index_key: string
-  cost: string
-  model_id: string
+  model: string
+  name: string
+  description: string
+  type: string
+  parameter: string
 }
 
 export interface DatasheetUnitComposition {
@@ -71,10 +86,58 @@ export interface DatasheetUnitComposition {
 export interface DatasheetWargear {
   datasheet_id: string
   line: string
-  wargear_id: string
-  is_index_key: string
-  model_id: string
+  line_in_wargear: string
+  dice: string
+  name: string
+  description: string
+  range: string
+  type: string
+  A: string
+  BS_WS: string
+  S: string
+  AP: string
+  D: string
+}
+
+export interface DatasheetKeyword {
+  datasheet_id: string
+  keyword: string
+  model: string
+  is_faction_keyword: string
+}
+
+export interface DatasheetOption {
+  datasheet_id: string
+  line: string
+  button: string
+  description: string
+}
+
+export interface DatasheetModelCost {
+  datasheet_id: string
+  line: string
+  description: string
   cost: string
+}
+
+export interface DatasheetStratagem {
+  datasheet_id: string
+  stratagem_id: string
+}
+
+export interface DatasheetEnhancement {
+  datasheet_id: string
+  enhancement_id: string
+}
+
+export interface DatasheetDetachmentAbility {
+  datasheet_id: string
+  detachment_ability_id: string
+}
+
+export interface DatasheetLeader {
+  leader_id: string
+  attached_id: string
 }
 
 export interface Ability {
@@ -83,8 +146,6 @@ export interface Ability {
   legend: string
   faction_id: string
   description: string
-  type: string
-  parameter: string
 }
 
 export interface Stratagem {
@@ -98,7 +159,7 @@ export interface Stratagem {
   description: string
   faction_id: string
   detachment_id: string
-  source_id: string
+  detachment: string
 }
 
 export interface DetachmentAbility {
@@ -108,6 +169,14 @@ export interface DetachmentAbility {
   faction_id: string
   description: string
   detachment_id: string
+  detachment: string
+}
+
+export interface Detachment {
+  id: string
+  faction_id: string
+  name: string
+  legend: string
   type: string
 }
 
@@ -118,24 +187,8 @@ export interface Enhancement {
   faction_id: string
   detachment_id: string
   cost: string
-  source_id: string
-  is_index_key: string
-}
-
-export interface WargearItem {
-  id: string
-  name: string
-  type: string
-  faction_id: string
-  description: string
-  range: string
-  A: string
-  BS_WS: string
-  S: string
-  AP: string
-  D: string
-  is_index_key: string
-  source_id: string
+  legend: string
+  detachment: string
 }
 
 export interface SourceEntry {
@@ -143,6 +196,9 @@ export interface SourceEntry {
   name: string
   type: string
   edition: string
+  version: string
+  errata_date: string
+  errata_link: string
 }
 
 export interface LastUpdate {
@@ -162,10 +218,17 @@ export interface ParsedData {
   datasheetAbilities: DatasheetAbility[]
   datasheetUnitComposition: DatasheetUnitComposition[]
   datasheetWargear: DatasheetWargear[]
+  datasheetKeywords: DatasheetKeyword[]
+  datasheetOptions: DatasheetOption[]
+  datasheetModelsCost: DatasheetModelCost[]
+  datasheetStratagems: DatasheetStratagem[]
+  datasheetEnhancements: DatasheetEnhancement[]
+  datasheetDetachmentAbilities: DatasheetDetachmentAbility[]
+  datasheetLeaders: DatasheetLeader[]
   abilities: Ability[]
   stratagems: Stratagem[]
   detachmentAbilities: DetachmentAbility[]
+  detachments: Detachment[]
   enhancements: Enhancement[]
-  wargearList: WargearItem[]
   sources: SourceEntry[]
 }

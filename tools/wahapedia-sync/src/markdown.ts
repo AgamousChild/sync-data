@@ -34,7 +34,6 @@ export function generateFactionMarkdown(
     for (const ds of datasheets) {
       lines.push(`### ${ds.name}`)
       if (ds.role) lines.push(`**Role:** ${ds.role}`)
-      if (ds.cost) lines.push(`**Cost:** ${ds.cost} pts`)
       lines.push('')
 
       // Models (stat block)
@@ -43,16 +42,16 @@ export function generateFactionMarkdown(
         lines.push('| Name | M | T | SV | W | LD | OC |')
         lines.push('|------|---|---|----|----|----|----|')
         for (const m of models) {
-          const invul = m.invul_save ? ` (${m.invul_save}++)` : ''
-          lines.push(`| ${m.name} | ${m.M} | ${m.T} | ${m.SV}${invul} | ${m.W} | ${m.LD} | ${m.OC} |`)
+          const invul = m.inv_sv ? ` (${m.inv_sv}++)` : ''
+          lines.push(`| ${m.name} | ${m.M} | ${m.T} | ${m.Sv}${invul} | ${m.W} | ${m.Ld} | ${m.OC} |`)
         }
         lines.push('')
       }
 
-      // Weapons
+      // Weapons (inline stats from datasheet_wargear)
       const wargear = getWargearForDatasheet(dbPath, ds.id)
-      const ranged = wargear.filter((w) => w.wargear_name && (w as any).range && (w as any).range !== '-' && (w as any).range !== '')
-      const melee = wargear.filter((w) => w.wargear_name && ((w as any).range === '-' || (w as any).range === ''))
+      const ranged = wargear.filter((w) => w.name && w.range && w.range !== 'Melee' && w.range !== '-' && w.range !== '')
+      const melee = wargear.filter((w) => w.name && (w.range === 'Melee' || w.range === '-' || w.range === ''))
 
       if (ranged.length > 0) {
         lines.push('**Ranged Weapons**')
@@ -60,7 +59,7 @@ export function generateFactionMarkdown(
         lines.push('| Weapon | Range | A | BS | S | AP | D |')
         lines.push('|--------|-------|---|----|---|----|---|')
         for (const w of ranged) {
-          lines.push(`| ${w.wargear_name} | ${(w as any).range} | ${(w as any).A} | ${(w as any).BS_WS} | ${(w as any).S} | ${(w as any).AP} | ${(w as any).D} |`)
+          lines.push(`| ${w.name} | ${w.range} | ${w.A} | ${w.BS_WS} | ${w.S} | ${w.AP} | ${w.D} |`)
         }
         lines.push('')
       }
@@ -71,20 +70,20 @@ export function generateFactionMarkdown(
         lines.push('| Weapon | A | WS | S | AP | D |')
         lines.push('|--------|---|----|---|----|---|')
         for (const w of melee) {
-          lines.push(`| ${w.wargear_name} | ${(w as any).A} | ${(w as any).BS_WS} | ${(w as any).S} | ${(w as any).AP} | ${(w as any).D} |`)
+          lines.push(`| ${w.name} | ${w.A} | ${w.BS_WS} | ${w.S} | ${w.AP} | ${w.D} |`)
         }
         lines.push('')
       }
 
-      // Abilities
+      // Abilities (inline from datasheet_abilities)
       const abs = getAbilitiesForDatasheet(dbPath, ds.id)
       if (abs.length > 0) {
         lines.push('**Abilities**')
         lines.push('')
         for (const a of abs) {
-          if (a.ability_name) {
-            const desc = a.ability_description ? `: ${stripHtml(a.ability_description)}` : ''
-            lines.push(`- **${a.ability_name}**${desc}`)
+          if (a.name) {
+            const desc = a.description ? `: ${stripHtml(a.description)}` : ''
+            lines.push(`- **${a.name}**${desc}`)
           }
         }
         lines.push('')

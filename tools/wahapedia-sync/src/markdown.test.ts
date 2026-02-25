@@ -15,40 +15,59 @@ function sampleData(): ParsedData {
     datasheets: [
       {
         id: 'ds1', name: 'Intercessors', faction_id: 'SM', source_id: '',
-        role: 'Battleline', unit_composition: '', transport: '', virtual: '',
-        cost: '80', cost_per_unit: '',
+        role: 'Battleline', legend: '', transport: '', virtual: '',
+        loadout: '', leader_head: '', leader_footer: '',
+        damaged_w: '', damaged_description: '', link: '',
       },
     ],
     datasheetModels: [
       {
         datasheet_id: 'ds1', line: '1', name: 'Intercessor',
-        M: '6"', T: '4', SV: '3+', W: '2', LD: '6+', OC: '2',
-        base_size: '32mm', invul_save: '',
+        M: '6"', T: '4', Sv: '3+', W: '2', Ld: '6+', OC: '2',
+        base_size: '32mm', inv_sv: '', inv_sv_descr: '', base_size_descr: '',
       },
     ],
     datasheetAbilities: [
-      { datasheet_id: 'ds1', line: '1', ability_id: 'ab1', is_index_key: '', cost: '', model_id: '' },
+      {
+        datasheet_id: 'ds1', line: '1', ability_id: 'ab1',
+        model: '', name: 'Oath of Moment', description: 'Re-roll <b>all</b> hit rolls',
+        type: 'Faction', parameter: '',
+      },
     ],
     datasheetUnitComposition: [],
     datasheetWargear: [
-      { datasheet_id: 'ds1', line: '1', wargear_id: 'wg1', is_index_key: '', model_id: '', cost: '' },
+      {
+        datasheet_id: 'ds1', line: '1', line_in_wargear: '1', dice: '',
+        name: 'Bolt Rifle', description: '', range: '30"', type: 'Ranged',
+        A: '2', BS_WS: '3+', S: '4', AP: '-1', D: '1',
+      },
+      {
+        datasheet_id: 'ds1', line: '2', line_in_wargear: '1', dice: '',
+        name: 'Close combat weapon', description: '', range: 'Melee', type: 'Melee',
+        A: '3', BS_WS: '3+', S: '4', AP: '0', D: '1',
+      },
     ],
+    datasheetKeywords: [],
+    datasheetOptions: [],
+    datasheetModelsCost: [],
+    datasheetStratagems: [],
+    datasheetEnhancements: [],
+    datasheetDetachmentAbilities: [],
+    datasheetLeaders: [],
     abilities: [
-      { id: 'ab1', name: 'Oath of Moment', legend: '', faction_id: 'SM', description: 'Re-roll <b>all</b> hit rolls', type: 'Faction', parameter: '' },
+      { id: 'ab1', name: 'Oath of Moment', legend: '', faction_id: 'SM', description: 'Re-roll <b>all</b> hit rolls' },
     ],
     stratagems: [
       {
         id: 'st1', name: 'Armour of Contempt', type: 'Battle Tactic', cp_cost: '1',
         legend: '', turn: 'Either', phase: 'Shooting', description: 'Worsen AP by 1',
-        faction_id: 'SM', detachment_id: '', source_id: '',
+        faction_id: 'SM', detachment_id: '', detachment: '',
       },
     ],
     detachmentAbilities: [],
+    detachments: [],
     enhancements: [
-      { id: 'en1', name: 'Artificer Armour', description: '+1 to save', faction_id: 'SM', detachment_id: '', cost: '10', source_id: '', is_index_key: '' },
-    ],
-    wargearList: [
-      { id: 'wg1', name: 'Bolt Rifle', type: 'Ranged', faction_id: 'SM', description: '', range: '30"', A: '2', BS_WS: '3+', S: '4', AP: '-1', D: '1', is_index_key: '', source_id: '' },
+      { id: 'en1', name: 'Artificer Armour', description: '+1 to save', faction_id: 'SM', detachment_id: '', cost: '10', legend: '', detachment: '' },
     ],
     sources: [],
   }
@@ -85,6 +104,12 @@ describe('markdown generation', () => {
       const md = generateFactionMarkdown(dbPath, 'SM', 'Space Marines')
       expect(md).toContain('**Ranged Weapons**')
       expect(md).toContain('| Bolt Rifle | 30" | 2 | 3+ | 4 | -1 | 1 |')
+    })
+
+    it('includes melee weapons table', () => {
+      const md = generateFactionMarkdown(dbPath, 'SM', 'Space Marines')
+      expect(md).toContain('**Melee Weapons**')
+      expect(md).toContain('| Close combat weapon | 3 | 3+ | 4 | 0 | 1 |')
     })
 
     it('includes abilities with HTML stripped', () => {

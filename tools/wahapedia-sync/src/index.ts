@@ -52,11 +52,18 @@ async function main() {
     datasheetAbilities: [],
     datasheetUnitComposition: [],
     datasheetWargear: [],
+    datasheetKeywords: [],
+    datasheetOptions: [],
+    datasheetModelsCost: [],
+    datasheetStratagems: [],
+    datasheetEnhancements: [],
+    datasheetDetachmentAbilities: [],
+    datasheetLeaders: [],
     abilities: [],
     stratagems: [],
     detachmentAbilities: [],
+    detachments: [],
     enhancements: [],
-    wargearList: [],
     sources: [],
   }
 
@@ -69,11 +76,18 @@ async function main() {
       case 'Datasheets_abilities': data.datasheetAbilities = rows as any; break
       case 'Datasheets_unit_composition': data.datasheetUnitComposition = rows as any; break
       case 'Datasheets_wargear': data.datasheetWargear = rows as any; break
+      case 'Datasheets_keywords': data.datasheetKeywords = rows as any; break
+      case 'Datasheets_options': data.datasheetOptions = rows as any; break
+      case 'Datasheets_models_cost': data.datasheetModelsCost = rows as any; break
+      case 'Datasheets_stratagems': data.datasheetStratagems = rows as any; break
+      case 'Datasheets_enhancements': data.datasheetEnhancements = rows as any; break
+      case 'Datasheets_detachment_abilities': data.datasheetDetachmentAbilities = rows as any; break
+      case 'Datasheets_leader': data.datasheetLeaders = rows as any; break
       case 'Abilities': data.abilities = rows as any; break
       case 'Stratagems': data.stratagems = rows as any; break
       case 'Detachment_abilities': data.detachmentAbilities = rows as any; break
+      case 'Detachments': data.detachments = rows as any; break
       case 'Enhancements': data.enhancements = rows as any; break
-      case 'Wargear_list': data.wargearList = rows as any; break
       case 'Source': data.sources = rows as any; break
     }
   }

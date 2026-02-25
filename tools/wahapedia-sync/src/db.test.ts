@@ -23,11 +23,18 @@ function emptyData(): ParsedData {
     datasheetAbilities: [],
     datasheetUnitComposition: [],
     datasheetWargear: [],
+    datasheetKeywords: [],
+    datasheetOptions: [],
+    datasheetModelsCost: [],
+    datasheetStratagems: [],
+    datasheetEnhancements: [],
+    datasheetDetachmentAbilities: [],
+    datasheetLeaders: [],
     abilities: [],
     stratagems: [],
     detachmentAbilities: [],
+    detachments: [],
     enhancements: [],
-    wargearList: [],
     sources: [],
   }
 }
@@ -41,52 +48,83 @@ function sampleData(): ParsedData {
     datasheets: [
       {
         id: 'ds1', name: 'Intercessors', faction_id: 'SM', source_id: 'src1',
-        role: 'Troops', unit_composition: '5-10', transport: '', virtual: '',
-        cost: '80', cost_per_unit: '',
+        role: 'Troops', legend: '', transport: '', virtual: '',
+        loadout: '', leader_head: '', leader_footer: '',
+        damaged_w: '', damaged_description: '', link: '',
       },
       {
         id: 'ds2', name: 'Boyz', faction_id: 'ORK', source_id: 'src1',
-        role: 'Troops', unit_composition: '10-20', transport: '', virtual: '',
-        cost: '70', cost_per_unit: '',
+        role: 'Troops', legend: '', transport: '', virtual: '',
+        loadout: '', leader_head: '', leader_footer: '',
+        damaged_w: '', damaged_description: '', link: '',
       },
     ],
     datasheetModels: [
       {
         datasheet_id: 'ds1', line: '1', name: 'Intercessor',
-        M: '6"', T: '4', SV: '3+', W: '2', LD: '6+', OC: '2',
-        base_size: '32mm', invul_save: '',
+        M: '6"', T: '4', Sv: '3+', W: '2', Ld: '6+', OC: '2',
+        base_size: '32mm', inv_sv: '', inv_sv_descr: '', base_size_descr: '',
       },
     ],
     datasheetAbilities: [
-      { datasheet_id: 'ds1', line: '1', ability_id: 'ab1', is_index_key: '', cost: '', model_id: '' },
+      {
+        datasheet_id: 'ds1', line: '1', ability_id: 'ab1',
+        model: '', name: 'Oath of Moment', description: 'Re-roll hits',
+        type: 'Faction', parameter: '',
+      },
     ],
     datasheetUnitComposition: [
       { datasheet_id: 'ds1', line: '1', description: '5-10 Intercessors' },
     ],
     datasheetWargear: [
-      { datasheet_id: 'ds1', line: '1', wargear_id: 'wg1', is_index_key: '', model_id: '', cost: '' },
+      {
+        datasheet_id: 'ds1', line: '1', line_in_wargear: '1', dice: '',
+        name: 'Bolt Rifle', description: '', range: '30"', type: 'Ranged',
+        A: '2', BS_WS: '3+', S: '4', AP: '-1', D: '1',
+      },
+    ],
+    datasheetKeywords: [
+      { datasheet_id: 'ds1', keyword: 'Infantry', model: '', is_faction_keyword: 'false' },
+    ],
+    datasheetOptions: [
+      { datasheet_id: 'ds1', line: '1', button: '', description: 'Any model can take a grenade launcher' },
+    ],
+    datasheetModelsCost: [
+      { datasheet_id: 'ds1', line: '1', description: '5 models', cost: '80' },
+    ],
+    datasheetStratagems: [
+      { datasheet_id: 'ds1', stratagem_id: 'st1' },
+    ],
+    datasheetEnhancements: [
+      { datasheet_id: 'ds1', enhancement_id: 'en1' },
+    ],
+    datasheetDetachmentAbilities: [
+      { datasheet_id: 'ds1', detachment_ability_id: 'da1' },
+    ],
+    datasheetLeaders: [
+      { leader_id: 'ds1', attached_id: 'ds2' },
     ],
     abilities: [
-      { id: 'ab1', name: 'Oath of Moment', legend: '', faction_id: 'SM', description: 'Re-roll hits', type: 'Faction', parameter: '' },
+      { id: 'ab1', name: 'Oath of Moment', legend: '', faction_id: 'SM', description: 'Re-roll hits' },
     ],
     stratagems: [
       {
         id: 'st1', name: 'Armour of Contempt', type: 'Battle Tactic', cp_cost: '1',
         legend: '', turn: 'Either', phase: 'Shooting', description: 'Improve AP',
-        faction_id: 'SM', detachment_id: '', source_id: '',
+        faction_id: 'SM', detachment_id: '', detachment: '',
       },
     ],
     detachmentAbilities: [
-      { id: 'da1', name: 'Gladius Task Force', legend: '', faction_id: 'SM', description: 'Oath bonus', detachment_id: 'det1', type: 'Detachment Rule' },
+      { id: 'da1', name: 'Gladius Task Force', legend: '', faction_id: 'SM', description: 'Oath bonus', detachment_id: 'det1', detachment: 'Gladius' },
+    ],
+    detachments: [
+      { id: 'det1', faction_id: 'SM', name: 'Gladius Task Force', legend: '', type: '' },
     ],
     enhancements: [
-      { id: 'en1', name: 'Artificer Armour', description: '+1W', faction_id: 'SM', detachment_id: 'det1', cost: '10', source_id: '', is_index_key: '' },
-    ],
-    wargearList: [
-      { id: 'wg1', name: 'Bolt Rifle', type: 'Ranged', faction_id: 'SM', description: '', range: '30"', A: '2', BS_WS: '3+', S: '4', AP: '-1', D: '1', is_index_key: '', source_id: '' },
+      { id: 'en1', name: 'Artificer Armour', description: '+1W', faction_id: 'SM', detachment_id: 'det1', cost: '10', legend: '', detachment: 'Gladius' },
     ],
     sources: [
-      { id: 'src1', name: 'Index', type: 'Index', edition: '10th' },
+      { id: 'src1', name: 'Index', type: 'Index', edition: '10th', version: '', errata_date: '', errata_link: '' },
     ],
   }
 }
@@ -119,16 +157,23 @@ describe('database', () => {
       expect(tables).toEqual([
         'abilities',
         'datasheet_abilities',
+        'datasheet_detachment_abilities',
+        'datasheet_enhancements',
+        'datasheet_keywords',
+        'datasheet_leaders',
         'datasheet_models',
+        'datasheet_models_cost',
+        'datasheet_options',
+        'datasheet_stratagems',
         'datasheet_unit_composition',
         'datasheet_wargear',
         'datasheets',
         'detachment_abilities',
+        'detachments',
         'enhancements',
         'factions',
         'sources',
         'stratagems',
-        'wargear_list',
       ])
     })
   })
@@ -186,17 +231,20 @@ describe('database', () => {
       expect(models[0].T).toBe('4')
     })
 
-    it('getAbilitiesForDatasheet joins ability details', () => {
+    it('getAbilitiesForDatasheet returns inline ability details', () => {
       const abs = getAbilitiesForDatasheet(dbPath, 'ds1')
       expect(abs).toHaveLength(1)
-      expect(abs[0].ability_name).toBe('Oath of Moment')
-      expect(abs[0].ability_description).toBe('Re-roll hits')
+      expect(abs[0].name).toBe('Oath of Moment')
+      expect(abs[0].description).toBe('Re-roll hits')
     })
 
-    it('getWargearForDatasheet joins wargear details', () => {
+    it('getWargearForDatasheet returns inline weapon stats', () => {
       const wg = getWargearForDatasheet(dbPath, 'ds1')
       expect(wg).toHaveLength(1)
-      expect(wg[0].wargear_name).toBe('Bolt Rifle')
+      expect(wg[0].name).toBe('Bolt Rifle')
+      expect(wg[0].range).toBe('30"')
+      expect(wg[0].A).toBe('2')
+      expect(wg[0].BS_WS).toBe('3+')
     })
 
     it('getStratagemsByFaction filters by faction', () => {
