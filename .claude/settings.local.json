@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(cp:*)",
-      "Bash(cd /c/R/sync-data/tools/bsdata-sync && npm install 2>&1)"
+      "Bash(cd /c/R/sync-data/tools/bsdata-sync && npm install 2>&1)",
+      "Bash"
     ]
   }
 }

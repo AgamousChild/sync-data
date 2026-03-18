@@ -22,7 +22,11 @@ sync-data/
     gw-sync/             ← scrape GW PDFs → markdown (42 tests)
     wahapedia-sync/      ← Wahapedia CSVs → SQLite + markdown (50 tests)
     bsdata-sync/         ← BSData XML → SQLite + markdown (58 tests)
+    chapter-approved-sync/ ← Chapter Approved PDFs → markdown (17 tests)
+    ChapterApproved/     ← source PDFs (8 files, local only)
   .local/                ← output directory (gitignored, created at runtime)
+    chapter-approved/
+      markdown/          ← per-document markdown + INDEX.md
     gw/
       pdfs/              ← downloaded PDF files
       markdown/          ← converted markdown + INDEX.md
@@ -47,6 +51,7 @@ sync-data/
 | gw-sync | 42 | Scrape GW downloads page for 40K PDFs, extract text, convert to markdown |
 | wahapedia-sync | 50 | Pull Wahapedia CSVs into local SQLite + per-faction markdown |
 | bsdata-sync | 58 | Pull BSData XML catalogs from GitHub into local SQLite + per-faction markdown |
+| chapter-approved-sync | 17 | Parse Chapter Approved 2025 PDFs to markdown |
 
 ---
 
@@ -119,13 +124,14 @@ Tests live next to the code they test (`foo.ts` / `foo.test.ts`).
 
 The specific test file structure for each tool is documented in that tool's own CLAUDE.md.
 
-**Repo total: 150 tests, all passing.**
+**Repo total: 167 tests, all passing.**
 
 ```bash
 # Run tests for a specific tool
 cd tools/gw-sync && pnpm test
 cd tools/wahapedia-sync && pnpm test
 cd tools/bsdata-sync && pnpm test
+cd tools/chapter-approved-sync && pnpm test
 ```
 
 ---
@@ -137,3 +143,4 @@ All three tools are built and tested:
 - **gw-sync** — 42 tests passing, full pipeline: scrape → download → parse → markdown
 - **wahapedia-sync** — 50 tests passing, full pipeline: fetch CSVs → SQLite → markdown
 - **bsdata-sync** — 58 tests passing, full pipeline: GitHub API → XML parse → SQLite → markdown
+- **chapter-approved-sync** — 17 tests passing, full pipeline: local PDFs → parse → markdown
